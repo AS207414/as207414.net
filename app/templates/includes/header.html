@@ -1,27 +1,27 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
-<a class="navbar-brand" href="#">AS207414</a>
-<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
-  <span class="navbar-toggler-icon"></span>
-</button>
+<header class="d-flex border-bottom p-3 pb-0 align-items-center">
+         
+    <a href="{{ url_for('home_page') }}" class="text-dark text-decoration-none">
+      <h1 class="fs-4">AS207414</h1>
+    </a>
 
-<div class="collapse navbar-collapse" id="navbarsExample09">
-  <ul class="navbar-nav mr-auto">
-    <li class="nav-item active">
-      <a class="nav-link" href="{{ url_for('home_page') }}">Home <span class="sr-only">(current)</span></a>
-    </li>
-    <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Services</a>
-      <div class="dropdown-menu" aria-labelledby="dropdown09">
-        <a class="dropdown-item" href="https://speedtest.as207414.net">Speedtest</a>
-        <a class="dropdown-item disabled" href="#">Looking Glass (Coming Soon)</a>
-        <a class="dropdown-item disabled" href="#">Anycast Public PiHole (Coming Soon)</a>
-        <a class="dropdown-item disabled" href="#">NTP (Coming Soon)</a>
+    <ul class="nav align-self-center flex-grow-1">
+      
+      <li><a href="{{ url_for('peering') }}" class="nav-link ps-3 link-secondary">Peering Policy</a></li>
+      <li><a href="#" class="nav-link disabled ps-0 link-secondary">Looking Glass</a></li>
+      <li class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle ps-0 link-dark" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">Services</a>
+        <ul class="dropdown-menu text-small" aria-labelledby="dropdownMenu2">
+          <li><a class="dropdown-item disabled" href="#">Public NTP</a></li>
+          <li><a class="dropdown-item disabled" href="#">Public DNS</a></li>
+        </ul>
+      </li>
+    </ul>
 
-      </div>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="{{ url_for('peering') }}">Peering Policy</a>
-    </li>
-  </ul>
-</div>
-</nav>
+    <div class="align-self-center">
+      <ul class="nav">
+        <li><a href="https://www.peeringdb.com/net/22236" class="nav-link px-2 link-secondary">PeeringDB</a></li>
+        <li><a href="https://bgp.he.net/AS207414" class="nav-link px-2 link-secondary">BGP.HE</a></li>
+      </ul>
+    </div>
+    
+</header>

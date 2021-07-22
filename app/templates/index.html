@@ -2,64 +2,84 @@
 {% block title %}AS207414.net{% endblock %}
 {% block content %}
 
-    <h1 class="mt-5">Juanah.Cloud <small class="text-muted">AS207414</small></h1>
-    <p class="lead">AS207414 is a educational and research network operated by Ganawa Juanah.
-        For peering information please see our <a href="">peering policy.</a></p>
+<div class="container d-flex flex-column gap-5">
 
-    <hr/>
+    <div>
 
-    <h5 class="card-title"> Prefixes Announced: </h5>
-    <p><a href="https://bgp.he.net/net/2a0c:9a40:8280::/48"> 2a0c:9a40:8280::/48</a> (RIPE) </p>
-    <p><a href="https://bgp.he.net/net/2602:fed2:7119::/48"> 2602:fed2:7119::/48</a> (ARIN) </p>
+        <h1 class="mt-5">Juanah.Cloud <small class="text-muted">AS207414</small></h1>
+        <p class="lead mb-0">AS207414 is a educational and research network operated by Ganawa Juanah. </p>
 
-    <h5 class="card-title"> Upstream Providers: </h5>
-    <ul class="list-group pad-bottom">
+    </div>
+    <!-- <h1 class="mt-5">Juanah.Cloud <small class="text-muted">AS207414</small></h1>
+    <p class="lead mb-0">AS207414 is a educational and research network operated by Ganawa Juanah. </p> -->
+    <!-- <hr> -->
+
+    <div class="card">
+        <div class="card-header"> Prefixes Announced: </div>
+        <div class="card-body">
+        <p class="card-text">We currently announce lease IPV6 spaces from ARIN and RIPE in both regions.</p>
+        </div>
+        <ul class="list-group list-group-flush">
+        <li class="list-group-item"><a href="https://bgp.he.net/net/2a0c:9a40:8280::/48"> 2a0c:9a40:8280::/48</a> (RIPE) </li>
+        <li class="list-group-item"><a href="https://bgp.he.net/net/2602:fed2:7119::/48"> 2602:fed2:7119::/48</a> (ARIN) </li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <div class="card-header"> Upstream Providers: </div>
+        <ul class="list-group list-group-flush">
         <li class="list-group-item">Vultr (<a href="https://bgp.he.net/AS20473">AS20473</a>)
+            <span class="badge rounded-pill bg-success">IPv6</span>
+        </li>
+        <!-- <li class="list-group-item">VMHaus (<a href="https://bgp.he.net/AS136620">AS136620</a>)
             <span class="badge badge-pill badge-success">IPv6</span>
-        </li>
-        <li class="list-group-item">VMHaus (<a href="https://bgp.he.net/AS136620">AS136620</a>)
-            <span class="badge badge-pill badge-success">IPv6</span>
             <span class="badge badge-warning">Planned</span>
-        </li>
-    </ul>
+        </li> -->
+        </ul>
+    </div>
 
-    <h5 class="card-title"> IPv6 Peers: </h5>
-    <ul class="list-group pad-bottom">
+    <div class="card">
+        <div class="card-header"> IPv6 Peers: </div>
+        <ul class="list-group list-group-flush">
 
-        <li class="list-group-item">Vultr (<a href="https://bgp.he.net/AS20473">AS20473</a>)
-            <span class="badge badge-pill badge-success">IPv6</span>
-        </li>
-        <li class="list-group-item">iFog GmbH (<a href="https://bgp.he.net/AS34927">AS34927</a>)
-            <span class="badge badge-pill badge-success">IPv6</span>
-            <span class="badge badge-pill badge-secondary">Tunnel</span>
-            <span class="badge badge-warning">Planned</span>
-        </li>
+            <li class="list-group-item">Vultr (<a href="https://bgp.he.net/AS20473">AS20473</a>)
+                <span class="badge rounded-pill bg-success">IPv6</span>
+            </li>
+            <!-- <li class="list-group-item">iFog GmbH (<a href="https://bgp.he.net/AS34927">AS34927</a>)
+                <span class="badge badge-pill badge-success">IPv6</span>
+                <span class="badge badge-pill badge-secondary">Tunnel</span>
+                <span class="badge badge-warning">Planned</span>
+            </li> -->
 
-    </ul>
+        </ul>
+    </div>
 
-    <h5 class="card-title"> Public Exchange Locations: </h5>
+    <div class="card">
+        <div class="card-header"> Public Exchange Locations:</div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <a href="https://bgp.he.net/exchange/EVIX">EVIX</a>
+                <span class="flag-icon flag-icon-us"></span>
+                <span class="badge rounded-pill bg-warning">Planned</span>
+            </li>
+            <li class="list-group-item">
+                <a href="https://bgp.he.net/exchange/UNMETERED%20Exchange">UNMETERED Exchange</a>
+                <span class="flag-icon flag-icon-ca"></span>
+                <span class="badge rounded-pill bg-warning">Planned</span>
+            </li>
+            <li class="list-group-item">
+                <a href="https://bgp.he.net/exchange/4b42%20Internet%20Exchange%20Point">4b42 IXP</a>
+                <span class="flag-icon flag-icon-ch"></span>
+                <span class="badge rounded-pill bg-warning">Planned</span>
+            </li>
+            <li class="list-group-item">
+                <a href="https://bgp.he.net/exchange/KleyReX">KleyRex</a>
+                <span class="flag-icon flag-icon-de"></span>
+                <span class="badge rounded-pill bg-warning">Planned</span>
+            </li>
+        </ul>
+    </div>
 
-    <ul class="list-group pad-bottom">
-        <li class="list-group-item">
-            <a href="https://bgp.he.net/exchange/EVIX">EVIX</a>
-            <span class="flag-icon flag-icon-us"></span>
-            <span class="badge badge-warning">Planned</span>
-        </li>
-        <li class="list-group-item">
-            <a href="https://bgp.he.net/exchange/UNMETERED%20Exchange">UNMETERED Exchange</a>
-            <span class="flag-icon flag-icon-ca"></span>
-            <span class="badge badge-warning">Planned</span>
-        </li>
-        <li class="list-group-item">
-            <a href="https://bgp.he.net/exchange/4b42%20Internet%20Exchange%20Point">4b42 IXP</a>
-            <span class="flag-icon flag-icon-ch"></span>
-            <span class="badge badge-warning">Planned</span>
-        </li>
-        <li class="list-group-item">
-            <a href="https://bgp.he.net/exchange/KleyReX">KleyRex</a>
-            <span class="flag-icon flag-icon-de"></span>
-            <span class="badge badge-warning">Planned</span>
-        </li>
-    </ul>
+</div>
 
-{% endblock %}
+{% endblock %}       

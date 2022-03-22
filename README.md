@@ -1,6 +1,4 @@
 # AS207414.net Website
-[![Build Status](https://travis-ci.org/AS207414/asn_website.svg?branch=master)](https://travis-ci.org/AS207414/asn_website)
-
 Source code for AS207414.net
 
 ### Requirements
@@ -20,5 +18,3 @@ The website runs as a container, so simply run:
 ```bash
 docker-compose up
 ```
-
-

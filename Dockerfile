@@ -18,7 +18,8 @@ RUN addgroup --system $USER
 RUN adduser --system --ingroup $GROUP --home $HOME  $USER
 
 # copy project
-COPY ./app $ASN_HOME
+COPY src/app $ASN_HOME
+COPY src/entrypoint.sh $HOME
 
 # change directory
 WORKDIR $ASN_HOME
@@ -37,5 +38,8 @@ EXPOSE 5000
 
 HEALTHCHECK CMD curl --fail http://localhost:5000/ || exit 1
 
+# change directory
+WORKDIR $HOME
+
 # Entrypoint
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["/home/asn/entrypoint.sh"]

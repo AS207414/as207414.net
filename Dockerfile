@@ -1,7 +1,6 @@
 # pull official base image
 FROM python:3
 
-MAINTAINER Ganawa Juanah
 LABEL version="1.0"
 LABEL description="ASN Website"
 

@@ -1,7 +1,0 @@
-version: '3.7'
-services:
-  web:
-    image: ganawa/as207414web
-    container_name: asn
-    ports:
-      - "5000:5000"

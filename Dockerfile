@@ -9,4 +9,4 @@ COPY --from=builder /go/web /root/asn
 
 WORKDIR /root/asn
 
-ENTRYPOINT [ "/main" ]
+ENTRYPOINT [ "./main" ]

@@ -25,17 +25,10 @@ func main() {
         infoLog:  infoLog,
     }
 
-	mux := http.NewServeMux()
-	mux.HandleFunc("/", app.index)
-	mux.HandleFunc("/peering.html", app.peering)
-
-	fileServer := http.FileServer(http.Dir("./web/static/"))
-	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
-
 	srv := &http.Server{
 		Addr:		*addr,
 		ErrorLog: 	errorLog,
-		Handler: 	mux,
+		Handler: 	app.routes(),
 	}
 
 	infoLog.Printf("Starting server on %s", *addr)

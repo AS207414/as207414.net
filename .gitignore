@@ -2,3 +2,4 @@ venv/
 app/__pycache__/
 app/*.py[cod]
 app/*$py.class
+tmp/

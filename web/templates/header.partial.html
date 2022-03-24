@@ -1,0 +1,30 @@
+{{ define "header"}}
+
+<header class="d-flex border-bottom p-3 pb-0 align-items-center">
+
+    <a href="/" class="text-dark text-decoration-none">
+      <h1 class="fs-4">AS207414</h1>
+    </a>
+
+    <ul class="nav align-self-center flex-grow-1">
+
+      <li><a href="/peering.html" class="nav-link ps-3 link-secondary">Peering Policy</a></li>
+      <li><a href="#" class="nav-link disabled ps-0 link-secondary">Looking Glass</a></li>
+      <li class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle ps-0 link-dark" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">Services</a>
+        <ul class="dropdown-menu text-small" aria-labelledby="dropdownMenu2">
+          <li><a class="dropdown-item disabled" href="#">Public NTP</a></li>
+          <li><a class="dropdown-item disabled" href="#">Public DNS</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <div class="align-self-center">
+      <ul class="nav">
+        <li><a href="https://www.peeringdb.com/net/22236" class="nav-link px-2 link-secondary">PeeringDB</a></li>
+        <li><a href="https://bgp.he.net/AS207414" class="nav-link px-2 link-secondary">BGP.HE</a></li>
+      </ul>
+    </div>
+
+</header>
+{{ end }}

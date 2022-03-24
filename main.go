@@ -1,7 +1,8 @@
-package web
+package main
 
 import (
 	"html/template"
+	"log"
 	"net/http"
 	"os"
 )
@@ -53,5 +54,7 @@ func main() {
 	// 500 Page
 	mux.HandleFunc("/500.html", errorHandler)
 
-	http.ListenAndServe(":"+port, mux)
+	if err := http.ListenAndServe(":" + port, mux); err != nil {
+		log.Fatal(err)
+	}
 }

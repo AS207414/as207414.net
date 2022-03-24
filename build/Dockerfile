@@ -1,12 +1,12 @@
 FROM golang:1.17 AS builder
 
 COPY ./as207414.net .
-RUN go build main.go
+RUN go build web.go
 
 FROM alpine
 
-COPY --from=builder /go/web /root/asn
+COPY --from=builder /go/web /app
 
 WORKDIR /root/asn
 
-ENTRYPOINT [ "./main" ]
+ENTRYPOINT [ "/app/web" ]

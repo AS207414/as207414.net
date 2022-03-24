@@ -7,6 +7,10 @@ import (
 	"os"
 )
 
+type application struct {
+    errorLog *log.Logger
+    infoLog  *log.Logger
+}
 
 func main() {
 
@@ -16,9 +20,14 @@ func main() {
 	infoLog := log.New(os.Stdout, "INFO\t", log.LUTC|log.Ltime)
 	errorLog := log.New(os.Stderr, "ERROR\t", log.LUTC|log.Ltime|log.Llongfile)
 
+	app := &application{
+        errorLog: errorLog,
+        infoLog:  infoLog,
+    }
+
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", index)
-	mux.HandleFunc("/peering.html", peering)
+	mux.HandleFunc("/", app.index)
+	mux.HandleFunc("/peering.html", app.peering)
 
 	fileServer := http.FileServer(http.Dir("./web/static/"))
 	mux.Handle("/static/", http.StripPrefix("/static", fileServer))

@@ -22,15 +22,13 @@ func (app *application) index(w http.ResponseWriter, r *http.Request) {
 
 	ts, err := template.ParseFiles(files...)
     if err != nil {
-        app.errorLog.Println(err.Error())
-        http.Error(w, "Internal Server Error", 500)
+        app.serverError(w, err)
         return
     }
 
 	err = ts.Execute(w, nil)
     if err != nil {
-        app.errorLog.Println(err.Error())
-        http.Error(w, "Internal Server Error", 500)
+        app.serverError(w, err)
     }
 
 }
@@ -47,15 +45,13 @@ func (app *application) peering(w http.ResponseWriter, r *http.Request) {
 
 	ts, err := template.ParseFiles(files...)
     if err != nil {
-        app.errorLog.Println(err.Error())
-        http.Error(w, "Internal Server Error", 500)
+        app.serverError(w, err)
         return
     }
 
 	err = ts.Execute(w, nil)
     if err != nil {
-        app.errorLog.Println(err.Error())
-        http.Error(w, "Internal Server Error", 500)
+        app.serverError(w, err)
     }
 
 

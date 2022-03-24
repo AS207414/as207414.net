@@ -2,11 +2,10 @@ package main
 
 import (
     "net/http"
-	"log"
 	"html/template"
 )
 
-func index(w http.ResponseWriter, r *http.Request) {
+func (app *application) index(w http.ResponseWriter, r *http.Request) {
 
 	if r.URL.Path != "/" {
         http.NotFound(w, r)
@@ -23,20 +22,18 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 	ts, err := template.ParseFiles(files...)
     if err != nil {
-        log.Println(err.Error())
-        http.Error(w, "Internal Server Error", 500)
+        app.serverError(w, err)
         return
     }
 
 	err = ts.Execute(w, nil)
     if err != nil {
-        log.Println(err.Error())
-        http.Error(w, "Internal Server Error", 500)
+        app.serverError(w, err)
     }
 
 }
 
-func peering(w http.ResponseWriter, r *http.Request) {
+func (app *application) peering(w http.ResponseWriter, r *http.Request) {
 
 	files := []string{
 		"./web/templates/peering.page.html",
@@ -48,15 +45,13 @@ func peering(w http.ResponseWriter, r *http.Request) {
 
 	ts, err := template.ParseFiles(files...)
     if err != nil {
-        log.Println(err.Error())
-        http.Error(w, "Internal Server Error", 500)
+        app.serverError(w, err)
         return
     }
 
 	err = ts.Execute(w, nil)
     if err != nil {
-        log.Println(err.Error())
-        http.Error(w, "Internal Server Error", 500)
+        app.serverError(w, err)
     }
 
 

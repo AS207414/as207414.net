@@ -3,9 +3,7 @@ package main
 import (
 	"flag"
 	"log"
-	"net/http"
 	"os"
-	"fmt"
 )
 
 type config struct {
@@ -35,13 +33,7 @@ func main() {
         infoLog:  infoLog,
     }
 
-	srv := &http.Server{
-		Addr:		fmt.Sprintf("%s:%d",cfg.address, cfg.port),
-		ErrorLog: 	errorLog,
-		Handler: 	app.routes(),
-	}
-
 	infoLog.Printf("Starting server on http://%s:%d", cfg.address, cfg.port)
-    err := srv.ListenAndServe()
+    err := app.serve()
     errorLog.Fatal(err)
 }

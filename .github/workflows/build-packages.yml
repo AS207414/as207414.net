@@ -26,8 +26,8 @@ jobs:
       - name: git descibe
         id: git-describe
         run: |
-          git describe --always
-          echo "::set-output name=raw-version::$(git describe --always)"
+          git describe --always --tags
+          echo "::set-output name=raw-version::$(git describe --always --tags)"
 
   metadata_go-version:
     name: "Determine Go toolchain version"
@@ -79,10 +79,10 @@ jobs:
             GOARCH: ${{ matrix.goarch }}
           run: |
             mkdir dist out
-            go build -ldflags "-w -s -X main.version=${{ needs.metadata_raw-version.raw-version }}" -o=./dist/as207414_ui ./cmd/ui
-            zip -r -j out/as207414_${{ needs.metadata_raw-version.raw-version }}_${{ matrix.goos }}_${{ matrix.goarch }}.zip dist/
+            go build -ldflags "-w -s -X main.version=${{ needs.metadata_raw-version.outputs.raw-version }}" -o=./dist/as207414_ui ./cmd/ui
+            zip -r -j out/as207414_${{ needs.metadata_raw-version.outputs.raw-version }}_${{ matrix.goos }}_${{ matrix.goarch }}.zip dist/
 
         - uses: actions/upload-artifact@v2
           with:
-            name: as207414_${{ needs.metadata_raw-version.raw-version }}_${{ matrix.goos }}_${{ matrix.goarch }}.zip
-            path: out/as207414_${{ needs.metadata_raw-version.raw-version }}_${{ matrix.goos }}_${{ matrix.goarch }}.zip
+            name: as207414_${{ needs.metadata_raw-version.outputs.raw-version }}_${{ matrix.goos }}_${{ matrix.goarch }}.zip
+            path: out/as207414_${{ needs.metadata_raw-version.outputs.raw-version }}_${{ matrix.goos }}_${{ matrix.goarch }}.zip

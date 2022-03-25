@@ -4,6 +4,11 @@ import (
 	"flag"
 	"log"
 	"os"
+	"fmt"
+)
+
+var (
+	version   string
 )
 
 type config struct {
@@ -23,7 +28,14 @@ func main() {
 
 	flag.IntVar(&cfg.port, "port", 4000, "HTTP listen port")
 	flag.StringVar(&cfg.address, "address", "0.0.0.0", "HTTP listening IP")
+
+    displayVersion := flag.Bool("version", false, "Display version and exit")
 	flag.Parse()
+
+	if *displayVersion {
+        fmt.Printf("version:\t%s\n", version)
+        os.Exit(0)
+    }
 
 	infoLog := log.New(os.Stdout, "INFO\t", log.LUTC|log.Ltime)
 	errorLog := log.New(os.Stderr, "ERROR\t", log.LUTC|log.Ltime|log.Llongfile)

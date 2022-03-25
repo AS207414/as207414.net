@@ -26,6 +26,10 @@ run/ui:
 build/ui:
 	@echo 'Building cmd/ui...'
 	go build -ldflags='-s' -o=./bin/ui ./cmd/ui
+	@echo 'Building for linux_amd64'
+	GOOS=linux GOARCH=amd64  go build -ldflags='-s' -o=./bin/linux_amd64/as207414_ui ./cmd/ui
+	@echo 'Building for windows_amd64'
+	GOOS=windows GOARCH=amd64 go build -ldflags='-s' -o=./bin/windows_amd64/as207414_ui.exe ./cmd/ui
 
 # ==================================================================================== #
 # QUALITY CONTROL

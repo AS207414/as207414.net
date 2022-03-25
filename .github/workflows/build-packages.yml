@@ -71,7 +71,7 @@ jobs:
         - name: Install Go toolchain
           uses: actions/setup-go@v2
           with:
-            go-version: ${{ needs.metadata_go-version.outputs.version }}
+            go-version: ${{ needs.metadata_go-version.outputs.go-version }}
 
         - name: Build
           env:

@@ -79,8 +79,7 @@ jobs:
             GOARCH: ${{ matrix.goarch }}
           run: |
             mkdir dist out
-            current_time = $(date --iso-8601=seconds)
-            go build -ldflags "-w -s -X main.buildTime=$current_time -X main.version=${{ needs.metadata_raw-version.raw-version }}" -o=./dist/as207414_ui ./cmd/ui
+            go build -ldflags "-w -s -X main.version=${{ needs.metadata_raw-version.raw-version }}" -o=./dist/as207414_ui ./cmd/ui
             zip -r -j out/as207414_${{ needs.metadata_raw-version.raw-version }}_${{ matrix.goos }}_${{ matrix.goarch }}.zip dist/
 
         - uses: actions/upload-artifact@v2

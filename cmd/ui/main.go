@@ -8,6 +8,7 @@ import (
 )
 
 var (
+	buildTime string
 	version   string
 )
 
@@ -34,6 +35,7 @@ func main() {
 
 	if *displayVersion {
         fmt.Printf("version:\t%s\n", version)
+		fmt.Printf("build time:\t%s\n", buildTime)
         os.Exit(0)
     }
 

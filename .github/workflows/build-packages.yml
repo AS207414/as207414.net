@@ -17,10 +17,8 @@ jobs:
     name: Determine the intended website version
     runs-on: ubuntu-latest
     outputs:
-      website-version: ${{ steps.get-website-version.outputs.product-version }}
-
+      raw-version: ${{ steps.get-website-version.outputs.product-version }}
     steps:
-
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
@@ -36,7 +34,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       go-version: ${{ steps.version.outputs.go-version }}
-
     steps:
       - uses: actions/checkout@v2
       - name: Determine Go version
@@ -44,7 +41,6 @@ jobs:
         run: |
           echo "Building with Go $(cat .go-version)"
           echo "::set-output name=go-version::$(cat .go-version)"
-
 
   build:
       name: Build for ${{ matrix.goos }}_${{ matrix.goarch }}
@@ -55,17 +51,17 @@ jobs:
       strategy:
         matrix:
           include:
-            - {goos: "freebsd", goarch: "386"}
-            - {goos: "freebsd", goarch: "amd64"}
-            - {goos: "freebsd", goarch: "arm"}
+            # - {goos: "freebsd", goarch: "386"}
+            # - {goos: "freebsd", goarch: "amd64"}
+            # - {goos: "freebsd", goarch: "arm"}
             - {goos: "linux", goarch: "386"}
             - {goos: "linux", goarch: "amd64"}
             - {goos: "linux", goarch: "arm"}
             - {goos: "linux", goarch: "arm64"}
-            - {goos: "openbsd", goarch: "386"}
-            - {goos: "openbsd", goarch: "amd64"}
-            - {goos: "solaris", goarch: "amd64"}
-            - {goos: "windows", goarch: "386"}
+            # - {goos: "openbsd", goarch: "386"}
+            # - {goos: "openbsd", goarch: "amd64"}
+            # - {goos: "solaris", goarch: "amd64"}
+            # - {goos: "windows", goarch: "386"}
             - {goos: "windows", goarch: "amd64"}
         fail-fast: false
 
@@ -75,4 +71,19 @@ jobs:
         - name: Install Go toolchain
           uses: actions/setup-go@v2
           with:
-            go-version: ${{ needs.get-go-version.outputs.go-version }}
+            go-version: ${{ needs.metadata_go-version.outputs.version }}
+
+        - name: Build
+          env:
+            GOOS: ${{ matrix.goos }}
+            GOARCH: ${{ matrix.goarch }}
+          run: |
+            mkdir dist out
+            current_time = $(date --iso-8601=seconds)
+            go build -ldflags "-w -s -X main.buildTime=$current_time -X main.version=${{ needs.metadata_raw-version.raw-version }}" -o=./dist/as207414_ui ./cmd/ui
+            zip -r -j out/as207414_${{ needs.metadata_raw-version.raw-version }}_${{ matrix.goos }}_${{ matrix.goarch }}.zip dist/
+
+        - uses: actions/upload-artifact@v2
+          with:
+            name: as207414_${{ needs.metadata_raw-version.raw-version }}_${{ matrix.goos }}_${{ matrix.goarch }}.zip
+            path: out/as207414_${{ needs.metadata_raw-version.raw-version }}_${{ matrix.goos }}_${{ matrix.goarch }}.zip

@@ -34,6 +34,11 @@ help:
 run/ui:
 	@go run ./cmd/ui
 
+## run/ui/docker: run the website ui from docker image
+.PHONY: run/ui/docker
+run/ui/docker:
+	@docker run --rm -p 4000:4000 -it ${docker_image_name}
+
 # ==================================================================================== #
 # BUILD
 # ==================================================================================== #
@@ -42,7 +47,7 @@ run/ui:
 .PHONY: build/ui
 build/ui:
 	@echo 'Building for ${GOOS}_${GOARCH} to ${build_outfile}'
-	@GOOS=${GOOS} GOARCH=${GOARCH} go build -ldflags=${linker_flags} -o=${build_outfile} ./cmd/ui
+	@CGO_ENABLED=0 GOOS=${GOOS} GOARCH=${GOARCH} go build -a -installsuffix cgo -ldflags=${linker_flags} -o=${build_outfile} ./cmd/ui
 
 ## build/ui/docker: build the cmd/ui docker image
 .PHONY: build/ui/docker

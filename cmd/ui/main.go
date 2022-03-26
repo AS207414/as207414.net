@@ -43,7 +43,7 @@ func main() {
 	errorLog := log.New(os.Stderr, "ERROR\t", log.LUTC|log.Ltime|log.Llongfile)
 
 	// Initialize a new template cache...
-    templateCache, err := newTemplateCache("./web/templates/")
+    templateCache, err := newTemplateCache()
     if err != nil {
         errorLog.Fatal(err)
     }

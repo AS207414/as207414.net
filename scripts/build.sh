@@ -21,11 +21,19 @@ BUILD_OS="${BUILD_OS:=linux}"
 BUILD_ARCH="${BUILD_ARCH:=amd64}"
 BIN_NAME="as207414_${BUILD_OS}_${BUILD_ARCH}"
 
+while getopts f: flag
+do
+    case "${flag}" in
+        f) IMAGENAME=${OPTARG};;
+    esac
+done
 
-# CLEAN existing binaries in build/docker
-rm -f build/docker/$BIN_NAME
+echo "CLEAN existing binaries in build/docker" && \
+    rm -f build/docker/$BIN_NAME
 
-# COPY bin to build/docker
-cp bin/$BIN_NAME build/docker/$BIN_NAME
+echo "COPY bin to build/docker" && \
+    cp bin/$BIN_NAME build/docker/$BIN_NAME && \
+    chmod +x build/docker/$BIN_NAME
 
-docker build build/docker -t test
+echo "BUILD docker image to image ${IMAGENAME}" && \
+    docker build build/docker -t $IMAGENAME

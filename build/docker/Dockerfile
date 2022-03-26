@@ -1,5 +1,5 @@
-FROM alpine:3.15
+FROM ubuntu
 
-COPY . .
+ADD as207414_linux_amd64 /
 
-ENTRYPOINT [ "/as207414_linux_amd64" ]
+CMD [ "/as207414_linux_amd64" ]

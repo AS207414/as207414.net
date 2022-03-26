@@ -1,4 +1,21 @@
 # ==================================================================================== #
+# VERSIONING VARIABLES
+# ==================================================================================== #
+
+git_description = $(shell git describe --always --dirty --tags)
+linker_flags = '-s -w -X main.version=${git_description}'
+
+# ==================================================================================== #
+# BUILD VARIABLES
+# ==================================================================================== #
+
+GOOS = 'linux'
+GOARCH = 'amd64'
+build_directory = 'bin'
+build_outfile = '${build_directory}/as207414_${GOOS}_${GOARCH}'
+docker_image_name = "as207414_ui"
+
+# ==================================================================================== #
 # HELPERS
 # ==================================================================================== #
 
@@ -24,12 +41,14 @@ run/ui:
 ## build/ui: build the cmd/ui application
 .PHONY: build/ui
 build/ui:
-	@echo 'Building cmd/ui...'
-	go build -ldflags='-s' -o=./bin/ui ./cmd/ui
-	@echo 'Building for linux_amd64'
-	GOOS=linux GOARCH=amd64  go build -ldflags='-s' -o=./bin/linux_amd64/as207414_ui ./cmd/ui
-	@echo 'Building for windows_amd64'
-	GOOS=windows GOARCH=amd64 go build -ldflags='-s' -o=./bin/windows_amd64/as207414_ui.exe ./cmd/ui
+	@echo 'Building for ${GOOS}_${GOARCH} to ${build_outfile}'
+	@GOOS=${GOOS} GOARCH=${GOARCH} go build -ldflags=${linker_flags} -o=${build_outfile} ./cmd/ui
+
+## build/ui/docker: build the cmd/ui docker image
+.PHONY: build/ui/docker
+build/ui/docker:
+	@echo 'Building docker image for ${GOOS}_${GOARCH} to ${docker_image_name}'
+	@scripts/build.sh -f ${docker_image_name}
 
 # ==================================================================================== #
 # QUALITY CONTROL

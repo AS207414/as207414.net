@@ -29,6 +29,13 @@ jobs:
           git describe --always --tags
           echo "::set-output name=raw-version::$(git describe --always --tags)"
 
+      - name: Git Version
+        uses: codacy/git-version@2.2.0
+        with:
+          prefix: v
+          release-branch: main
+          dev-branch: develop
+
   metadata_go-version:
     name: "Determine Go toolchain version"
     runs-on: ubuntu-latest
@@ -78,10 +85,58 @@ jobs:
             GOOS: ${{ matrix.goos }}
             GOARCH: ${{ matrix.goarch }}
           run: |
-            mkdir dist out
-            go build -ldflags "-w -s -X main.version=${{ needs.metadata_raw-version.outputs.raw-version }}" -o=./dist/as207414_ui ./cmd/ui
+            mkdir out
+            go build -ldflags "-w -s -X main.version=${{ needs.metadata_raw-version.outputs.raw-version }}" -o=out/as207414_${{ needs.metadata_raw-version.outputs.raw-version }}_${{ matrix.goos }}_${{ matrix.goarch }} ./cmd/ui
 
         - uses: actions/upload-artifact@v3
           with:
             name: as207414_${{ needs.metadata_raw-version.outputs.raw-version }}_${{ matrix.goos }}_${{ matrix.goarch }}
             path: out/as207414_${{ needs.metadata_raw-version.outputs.raw-version }}_${{ matrix.goos }}_${{ matrix.goarch }}
+
+  docker-build:
+    name: Build docker  for linux_${{ matrix.arch }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: ["amd64"]
+      fail-fast: false
+    needs:
+      - build
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: as207414_${{ needs.metadata_raw-version.outputs.raw-version }}_linux_${{ matrix.arch }}
+
+      - name: Print directory
+        run: |
+          ls -l
+
+      # - name: Docker Login
+      #   uses: docker/login-action@v1
+      #   with:
+      #     username: ${{ secrets.DOCKER_HUB_USERNAME }}
+      #     password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      # - name: Login to Github Packages
+      #   uses: docker/login-action@v1
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.repository_owner }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
+
+      # - name: Set up Docker Buildx
+      #   id: buildx
+      #   uses: docker/setup-buildx-action@v1
+
+      # - name: Build and push Docker images
+      #   uses: docker/build-push-action@v2
+      #   with:
+      #     builder: ${{ steps.buildx.outputs.name }}
+      #     context: .
+      #     file: Dockerfile
+      #     push: true
+      #     build-args: |
+      #       ANSIBLE_VERSION=${{ env.ANSIBLE_VERSION }}
+      #     tags: |
+      #       ${{ secrets.DOCKER_HUB_USERNAME }}/as207414-ui:latest
+      #       ghcr.io/${{ github.repository_owner }}/as207414-ui:latest

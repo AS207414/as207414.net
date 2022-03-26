@@ -27,7 +27,7 @@ func main() {
 	var cfg config
 
 	flag.IntVar(&cfg.port, "port", 4000, "HTTP listen port")
-	flag.StringVar(&cfg.address, "address", "0.0.0.0", "HTTP listening IP")
+	flag.StringVar(&cfg.address, "address", "", "HTTP listening IP")
 
     displayVersion := flag.Bool("version", false, "Display version and exit")
 	flag.Parse()
@@ -41,11 +41,11 @@ func main() {
 	errorLog := log.New(os.Stderr, "ERROR\t", log.LUTC|log.Ltime|log.Llongfile)
 
 	app := &application{
+		config: cfg,
         errorLog: errorLog,
         infoLog:  infoLog,
     }
 
-	infoLog.Printf("Starting server on http://%s:%d", cfg.address, cfg.port)
     err := app.serve()
     errorLog.Fatal(err)
 }

@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"fmt"
+	"html/template"
 )
 
 var (
@@ -20,6 +21,7 @@ type application struct {
 	config config
     errorLog *log.Logger
     infoLog  *log.Logger
+	templateCache map[string]*template.Template
 }
 
 func main() {
@@ -40,12 +42,19 @@ func main() {
 	infoLog := log.New(os.Stdout, "INFO\t", log.LUTC|log.Ltime)
 	errorLog := log.New(os.Stderr, "ERROR\t", log.LUTC|log.Ltime|log.Llongfile)
 
+	// Initialize a new template cache...
+    templateCache, err := newTemplateCache("./web/templates/")
+    if err != nil {
+        errorLog.Fatal(err)
+    }
+
 	app := &application{
 		config: cfg,
         errorLog: errorLog,
         infoLog:  infoLog,
+		templateCache: templateCache,
     }
 
-    err := app.serve()
-    errorLog.Fatal(err)
+    erra := app.serve()
+    errorLog.Fatal(erra)
 }

@@ -2,7 +2,7 @@ package main
 
 import (
     "net/http"
-	"html/template"
+	// "html/template"
 )
 
 func (app *application) index(w http.ResponseWriter, r *http.Request) {
@@ -12,47 +12,53 @@ func (app *application) index(w http.ResponseWriter, r *http.Request) {
         return
     }
 
-	files := []string{
-		"./web/templates/index.page.html",
-		"./web/templates/base.layout.html",
-		"./web/templates/footer.partial.html",
-		"./web/templates/header.partial.html",
+	// Use the new render helper.
+    app.render(w, r, "index.page.html")
 
-	}
+	// files := []string{
+	// 	"./web/templates/index.page.html",
+	// 	"./web/templates/base.layout.html",
+	// 	"./web/templates/footer.partial.html",
+	// 	"./web/templates/header.partial.html",
 
-	ts, err := template.ParseFiles(files...)
-    if err != nil {
-        app.serverError(w, err)
-        return
-    }
+	// }
 
-	err = ts.Execute(w, nil)
-    if err != nil {
-        app.serverError(w, err)
-    }
+	// ts, err := template.ParseFiles(files...)
+    // if err != nil {
+    //     app.serverError(w, err)
+    //     return
+    // }
+
+	// err = ts.Execute(w, nil)
+    // if err != nil {
+    //     app.serverError(w, err)
+    // }
 
 }
 
 func (app *application) peering(w http.ResponseWriter, r *http.Request) {
 
-	files := []string{
-		"./web/templates/peering.page.html",
-		"./web/templates/base.layout.html",
-		"./web/templates/footer.partial.html",
-		"./web/templates/header.partial.html",
+    app.render(w, r, "peering.page.html")
 
-	}
 
-	ts, err := template.ParseFiles(files...)
-    if err != nil {
-        app.serverError(w, err)
-        return
-    }
+	// files := []string{
+	// 	"./web/templates/peering.page.html",
+	// 	"./web/templates/base.layout.html",
+	// 	"./web/templates/footer.partial.html",
+	// 	"./web/templates/header.partial.html",
 
-	err = ts.Execute(w, nil)
-    if err != nil {
-        app.serverError(w, err)
-    }
+	// }
+
+	// ts, err := template.ParseFiles(files...)
+    // if err != nil {
+    //     app.serverError(w, err)
+    //     return
+    // }
+
+	// err = ts.Execute(w, nil)
+    // if err != nil {
+    //     app.serverError(w, err)
+    // }
 
 
 }

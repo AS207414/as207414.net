@@ -51,18 +51,10 @@ jobs:
       strategy:
         matrix:
           include:
-            # - {goos: "freebsd", goarch: "386"}
-            # - {goos: "freebsd", goarch: "amd64"}
-            # - {goos: "freebsd", goarch: "arm"}
             - {goos: "linux", goarch: "386"}
             - {goos: "linux", goarch: "amd64"}
             - {goos: "linux", goarch: "arm"}
             - {goos: "linux", goarch: "arm64"}
-            # - {goos: "openbsd", goarch: "386"}
-            # - {goos: "openbsd", goarch: "amd64"}
-            # - {goos: "solaris", goarch: "amd64"}
-            # - {goos: "windows", goarch: "386"}
-            - {goos: "windows", goarch: "amd64"}
         fail-fast: false
 
       steps:
@@ -86,23 +78,23 @@ jobs:
             name: as207414_${{ needs.metadata_raw-version.outputs.raw-version }}_${{ matrix.goos }}_${{ matrix.goarch }}
             path: out/as207414_${{ needs.metadata_raw-version.outputs.raw-version }}_${{ matrix.goos }}_${{ matrix.goarch }}
 
-  docker-build:
-    name: Build docker  for linux_${{ matrix.arch }}
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        arch: ["amd64"]
-      fail-fast: false
-    needs:
-      - build
-    steps:
-      - uses: actions/download-artifact@v3
-        with:
-          name: as207414_${{ needs.metadata_raw-version.outputs.raw-version }}_linux_${{ matrix.arch }}
+  # docker-build:
+  #   name: Build docker  for linux_${{ matrix.arch }}
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       arch: ["amd64"]
+  #     fail-fast: false
+  #   needs:
+  #     - build
+  #   steps:
+  #     - uses: actions/download-artifact@v3
+  #       with:
+  #         name: as207414_${{ needs.metadata_raw-version.outputs.raw-version }}_linux_${{ matrix.arch }}
 
-      - name: Print directory
-        run: |
-          ls -l
+  #     - name: Print directory
+  #       run: |
+  #         ls -l
 
       # - name: Docker Login
       #   uses: docker/login-action@v1

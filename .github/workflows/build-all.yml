@@ -86,3 +86,23 @@ jobs:
             ./cmd/ui && \
           chmod +x bin/as207414_linux_amd64 && \
           cp bin/as207414_linux_amd64 build/docker/as207414_linux_amd64
+
+      - name: Build and push development docker image
+        if: startsWith(env.branchName, 'develop') || startsWith(env.branchName, 'release') || startsWith(env.branchName, 'hotfix')
+        run: |
+          cd build/docker
+          docker build . \
+            -t ${{ secrets.DOCKER_HUB_USERNAME }}/as207414-ui:${{ env.SEMVER }} \
+            -t ghcr.io/${{ github.repository_owner }}/as207414-ui:${{ env.SEMVER }}
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/as207414-ui:${{ env.SEMVER }}
+          docker push ghcr.io/${{ github.repository_owner }}/as207414-ui:${{ env.SEMVER }}
+
+      - name: Build and push main/latest docker image
+        if: contains(env.branchName, 'main')
+        run: |
+          cd build/docker
+          docker build . \
+            -t ${{ secrets.DOCKER_HUB_USERNAME }}/as207414-ui:latest \
+            -t ghcr.io/${{ github.repository_owner }}/as207414-ui:latest
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/as207414-ui:latest
+          docker push ghcr.io/${{ github.repository_owner }}/as207414-ui:latest

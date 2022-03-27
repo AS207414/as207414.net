@@ -87,7 +87,7 @@ jobs:
           with:
             builder: ${{ steps.buildx.outputs.name }}
             context: ./build/docker
-            file: Dockerfile
+            file: ./build/docker/Dockerfile
             push: true
             tags: |
               ${{ secrets.DOCKER_HUB_USERNAME }}/as207414-ui:${{ needs.metadata_raw-version.outputs.raw-version }}

@@ -43,7 +43,7 @@ jobs:
           echo "::set-output name=go-version::$(cat .go-version)"
 
   build:
-      name: Build for ${{ matrix.goos }}_${{ matrix.goarch }}
+      name: Build for linux_amd64
       runs-on: ubuntu-latest
       needs:
         - metadata_raw-version
@@ -75,7 +75,7 @@ jobs:
           uses: docker/login-action@v1
           with:
             registry: ghcr.io
-            username: ${{ github.repository_owner }}
+            username: ganawa
             password: ${{ secrets.GHP_TOKEN }}
 
         - name: Set up Docker Buildx

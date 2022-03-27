@@ -1,9 +1,11 @@
+{{ define "base" }}
+
 <!doctype html>
 <html lang="en" class="h-100">
 
   <head>
 
-    {% block head %}
+    {{ block "head" . }}
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,10 +13,10 @@
     <meta name="robots" content= "index, follow">
     <meta name="author" content="Ganawa Juanah">
 
-    <title>{% block title %}{% endblock %}</title>
+    <title>{{ template "title" . }}</title>
 
     <!-- Favicon Icons -->
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon/favicon.ico') }}">
+    <link rel="shortcut icon" href="/static/favicon/favicon.ico">
 
     <!-- Flag Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.4.5/css/flag-icon.min.css">
@@ -30,23 +32,25 @@
         padding: 0 15px;
       }
     </style>
-    
-    {% endblock head %}
+
+    {{ end }}
 
   </head>
-  
+
   <body class="d-flex flex-column h-100 col-lg-8 mx-auto">
-    
+
     <!-- Include Top Nav Header -->
-    {% include 'includes/header.html' %}
+    {{ template "header" . }}
 
     <!-- Begin page content -->
-    <main class="flex-shrink-0 pb-5">{% block content %}{% endblock %}</main>
+    <main class="flex-shrink-0 pb-5">{{ template "main" . }}</main>
 
     <!-- Include Top Nav Header -->
-    {% include 'includes/footer.html' %}
-    
-    
+    {{ template "footer" . }}
+
+
   </body>
-  
+
 </html>
+
+{{ end }}

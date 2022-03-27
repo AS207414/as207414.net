@@ -1,6 +1,8 @@
-{% extends "base.html" %}
-{% block title %}AS207414.net{% endblock %}
-{% block content %}
+{{ template "base" .}}
+
+{{ define "title" }} AS207414 {{ end }}
+
+{{ define "main" }}
 
 <div class="container d-flex flex-column gap-5">
 
@@ -82,4 +84,4 @@
 
 </div>
 
-{% endblock %}       
+{{ end }}

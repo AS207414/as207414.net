@@ -1,6 +1,8 @@
-{% extends "base.html" %}
-{% block title %}AS207414.net{% endblock %}
-{% block content %}
+{{ template "base" .}}
+
+{{ define "title" }} AS207414 {{ end }}
+
+{{ define "main" }}
 
 <div class="container d-flex flex-column gap-5">
 
@@ -14,20 +16,21 @@
 
     <div>
         <h4> Peering Policy: </h4>
-        
+
         <p> Open Peering Policy. We can connect via any IXP sites I'm located at and eventually over a
             tunnel (GRE/SIT). </p>
 
         <p> Please email <a href="mailto:noc@juanah.cloud"> noc@juanah.cloud </a> if you
             agree to the terms below and wish to peer:</p>
-        
+
         <ul class="list-unstyled">
             <li> Peers may only send traffic to destinations announced by AS207414. </li>
             <li> Peers may only send traffic originating from their own networks. </li>
             <li> Peers are not allowed to point static routes towards AS207414. </li>
         </ul>
-          
+
     </div>
 
 </div>
-{% endblock %}
+
+{{ end }}

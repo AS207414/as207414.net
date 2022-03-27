@@ -9,7 +9,11 @@ import (
 )
 
 var (
-	version   string
+	version		string
+	os_ver		string
+	os_arc		string
+	go_ver		string
+	git_sha		string
 )
 
 type config struct {
@@ -35,7 +39,8 @@ func main() {
 	flag.Parse()
 
 	if *displayVersion {
-        fmt.Printf("version:\t%s\n", version)
+        fmt.Printf("as207414-%s\n", version)
+		fmt.Printf("%s/%s, %s, %s", os_ver, os_arc, go_ver, git_sha)
         os.Exit(0)
     }
 

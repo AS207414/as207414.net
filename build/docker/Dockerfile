@@ -6,4 +6,4 @@ COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certifica
 
 ADD as207414_linux_amd64 /
 
-CMD [ "/as207414_linux_amd64" ]
+ENTRYPOINT [ "/as207414_linux_amd64" ]

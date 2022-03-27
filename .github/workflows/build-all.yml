@@ -28,18 +28,18 @@ jobs:
         id: gitversion
         uses: gittools/actions/gitversion/execute@v0.9.7
 
-  goversion:
+  go-version:
     name: "Determine Go toolchain version"
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.version.outputs.version }}
+      go-version: ${{ steps.version.outputs.go-version }}
     steps:
       - uses: actions/checkout@v2
       - name: Determine Go version
         id: version
         run: |
           echo "Building with Go $(cat .go-version)"
-          echo "::set-output name=version::$(cat .go-version)"
+          echo "::set-output name=go-version::$(cat .go-version)"
 
   build:
     name: Build for linux_amd64
@@ -49,7 +49,7 @@ jobs:
       SHORTSHA: ${{ needs.gitversion.outputs.shortsha }}
       MAJORMINORPATCH: ${{ needs.gitversion.outputs.majorminorpatch }}
       BRANCH: ${{ needs.gitversion.outputs.branchname }}
-      GOVER: ${{ needs.goversion.outputs.version }}
+      GOVER: ${{ needs.go-version.outputs.go-version }}
     needs:
       - gitversion
       - goversion

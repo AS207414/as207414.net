@@ -25,7 +25,6 @@ jobs:
         uses: codacy/git-version@2.2.0
         id: gitversion
         with:
-          prefix: v
           release-branch: main
           dev-branch: develop
 

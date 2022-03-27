@@ -59,8 +59,9 @@ jobs:
           env:
             GOOS: linux
             GOARCH: amd64
+            CGO_ENABLED: 0
           run: |
-            go build -ldflags "-w -s -X main.version=${{ needs.metadata_raw-version.outputs.raw-version }}" \
+            go build -a -installsuffix cgo -ldflags "-w -s -X main.version=${{ needs.metadata_raw-version.outputs.raw-version }}" \
               -o=bin/as207414_linux_amd64 \
               ./cmd/ui && \
             chmod +x bin/as207414_linux_amd64 && \

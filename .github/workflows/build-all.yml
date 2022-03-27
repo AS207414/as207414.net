@@ -50,6 +50,8 @@ jobs:
       MAJORMINORPATCH: ${{ needs.gitversion.outputs.majorminorpatch }}
       BRANCH: ${{ needs.gitversion.outputs.branchname }}
       GOVER: ${{ needs.go-version.outputs.go-version }}
+      GOOS: linux
+      GOARCH: amd64
     needs:
       - gitversion
       - go-version
@@ -61,8 +63,6 @@ jobs:
           go-version: ${{ needs.go-version.outputs.go-version }}
       - name: Build binaries
         env:
-          GOOS: linux
-          GOARCH: amd64
           CGO_ENABLED: 0
           MAIN_VERSION: -X main.version=${{ env.MAJORMINORPATCH }}
           MAIN_OS_VER: -X main.os_ver=${{ env.GOOS }}

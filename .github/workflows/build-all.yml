@@ -87,7 +87,7 @@ jobs:
           username: ganawa
           password: ${{ secrets.GHP_TOKEN }}
       - name: Build and push development docker image
-        if: startsWith(env.branchName, 'develop') || startsWith(env.branchName, 'release') || startsWith(env.branchName, 'hotfix')
+        if: contains(env.branchName, 'develop') || startsWith(env.branchName, 'release') || startsWith(env.branchName, 'hotfix')
         run: |
           cd build/docker
           docker build . \

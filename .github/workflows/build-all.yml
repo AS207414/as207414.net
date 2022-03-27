@@ -1,4 +1,4 @@
-name: Testing gitversion
+name: Build and push AS207414 UI Binaries & Docker Images
 
 on:
   workflow_dispatch:
@@ -64,11 +64,11 @@ jobs:
           GOOS: linux
           GOARCH: amd64
           CGO_ENABLED: 0
-          MAIN_VERSION: -X main.version=$MAJORMINORPATCH
-          MAIN_OS_VER: -X main.os_ver=$GOOS
-          MAIN_OS_ARC: -X main.os_arc=$GOARCH
-          MAIN_GO_VER: -X main.go_ver=$GOVER
-          MAIN_GIT_SHA: -X main.git_sha=$SHORTSHA
+          MAIN_VERSION: -X main.version=${{ env.MAJORMINORPATCH }}
+          MAIN_OS_VER: -X main.os_ver=${{ env.GOOS }}
+          MAIN_OS_ARC: -X main.os_arc=${{ env.GOARCH }}
+          MAIN_GO_VER: -X main.go_ver=${{ env.GOVER }}
+          MAIN_GIT_SHA: -X main.git_sha=${{ env.SHORTSHA }}
         run: |
           go build -a -installsuffix cgo \
             -ldflags "-w -s ${{ env.MAIN_VERSION }} ${{ env.MAIN_OS_VER }} ${{ env.MAIN_OS_ARC }} ${{ env.MAIN_GO_VER }} ${{ env.MAIN_GIT_SHA }}" \

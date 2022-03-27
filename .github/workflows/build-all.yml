@@ -87,8 +87,8 @@ jobs:
           registry: ghcr.io
           username: ganawa
           password: ${{ secrets.GHP_TOKEN }}
-      - name: Build and push development docker image
-        if: contains(env.BRANCH, 'develop') || startsWith(env.BRANCH, 'release') || startsWith(env.BRANCH, 'hotfix')
+      - name: Build and push non-main docker image
+        if: contains(env.BRANCH, 'develop') || startsWith(env.BRANCH, 'release') || startsWith(env.BRANCH, 'hotfix') || startsWith(env.BRANCH, 'tags')
         run: |
           cd build/docker
           docker build . \
@@ -108,7 +108,7 @@ jobs:
           docker push ghcr.io/${{ github.repository_owner }}/as207414-ui:latest
 
       - name: Build and push non-tagged docker image
-        if: "!startsWith(env.BRANCH, 'develop') && !startsWith(env.BRANCH, 'release') && !startsWith(env.BRANCH, 'hotfix') && !startsWith(env.branchName, 'main')"
+        if: "!startsWith(env.BRANCH, 'develop') && !startsWith(env.BRANCH, 'release') && !startsWith(env.BRANCH, 'hotfix') && !startsWith(env.branchName, 'main') && !startsWith(env.BRANCH, 'tags')"
         run: |
           cd build/docker
           docker build . \

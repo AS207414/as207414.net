@@ -54,16 +54,18 @@ jobs:
           uses: actions/setup-go@v2
           with:
             go-version: ${{ needs.metadata_go-version.outputs.go-version }}
+
         - name: Build binaries
           env:
             GOOS: linux
             GOARCH: amd64
           run: |
+            BIN_NAME="as207414_${$GOOS}_${GOARCH}"
             go build -ldflags "-w -s -X main.version=${{ needs.metadata_raw-version.outputs.raw-version }}" \
-              -o=bin/as207414_${{ matrix.goos }}_${{ matrix.goarch }} \
+              -o=bin/${BIN_NAME} \
               ./cmd/ui && \
-            chmod +x bin/as207414_${{ matrix.goos }}_${{ matrix.goarch }} && \
-            cp bin/as207414_${{ matrix.goos }}_${{ matrix.goarch }} build/docker/as207414_${{ matrix.goos }}_${{ matrix.goarch }}
+            chmod +x bin/${BIN_NAME} && \
+            cp bin/${BIN_NAME} build/docker/${BIN_NAME}
 
         - name: Docker Login
           uses: docker/login-action@v1

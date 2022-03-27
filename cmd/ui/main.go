@@ -40,7 +40,7 @@ func main() {
 
 	if *displayVersion {
         fmt.Printf("as207414-%s\n", version)
-		fmt.Printf("%s/%s, %s, %s", os_ver, os_arc, go_ver, git_sha)
+		fmt.Printf("%s/%s, %s, %s\n", os_ver, os_arc, go_ver, git_sha)
         os.Exit(0)
     }
 

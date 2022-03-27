@@ -6,11 +6,14 @@ on:
 
 jobs:
 
-  metadata_raw-version:
+  gitversion:
     name: Determine the intended website version
     runs-on: ubuntu-latest
     outputs:
-      raw-version: ${{ steps.gitversion.outputs.version }}
+      majorminorpatch: ${{ steps.gitversion.outputs.majorMinorPatch }}
+      semver: ${{ steps.gitversion.outputs.semVer }}
+      shortsha: ${{ steps.gitversion.outputs.shortSha }}
+      branchname: ${{ steps.gitversion.outputs.branchName }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -22,21 +25,64 @@ jobs:
           versionSpec: '5.x'
 
       - name: Determine Version
+        id: gitversion
         uses: gittools/actions/gitversion/execute@v0.9.7
 
-      - name: Display SemVer
-        run: |
-          echo "SemVer: $GITVERSION_SEMVER"
-
-  metadata_go-version:
+  goversion:
     name: "Determine Go toolchain version"
     runs-on: ubuntu-latest
     outputs:
-      go-version: ${{ steps.version.outputs.go-version }}
+      version: ${{ steps.version.outputs.go-version }}
     steps:
       - uses: actions/checkout@v2
       - name: Determine Go version
         id: version
         run: |
           echo "Building with Go $(cat .go-version)"
-          echo "::set-output name=go-version::$(cat .go-version)"
+          echo "::set-output name=version::$(cat .go-version)"
+
+  build:
+    name: Build for linux_amd64
+    runs-on: ubuntu-latest
+    env:
+      SEMVER: ${{ needs.gitversion.outputs.semver }}
+      SHORTSHA: ${{ needs.gitversion.outputs.shortsha }}
+      MAJORMINORPATCH: ${{ needs.gitversion.outputs.majorminorpatch }}
+      BRANCH: ${{ needs.gitversion.outputs.branchname }}
+      GOVER: ${{ needs.goversion.outputs.version }}
+    needs:
+      - gitversion
+      - goversion
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Go toolchain
+        uses: actions/setup-go@v2
+        with:
+          go-version: $GOVER
+      - name: Login to Dockerhub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: Login to Github Packages
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ganawa
+          password: ${{ secrets.GHP_TOKEN }}
+      - name: Build binaries
+        env:
+          GOOS: linux
+          GOARCH: amd64
+          CGO_ENABLED: 0
+          MAIN_VERSION: -X main.version=$MAJORMINORPATCH
+          MAIN_OS_VER: -X main.os_ver=$GOOS
+          MAIN_OS_ARC: -X main.os_arc=$GOARCH
+          MAIN_GO_VER: -X main.go_ver=$GOVER
+          MAIN_GIT_SHA: -X main.git_sha=$SHORTSHA
+        run: |
+          go build -a -installsuffix cgo -ldflags "-w -s $MAIN_VERSION $MAIN_OS_VER $MAIN_OS_ARC $MAIN_GO_VER $MAIN_GIT_SHA" \
+            -o=bin/as207414_linux_amd64 \
+            ./cmd/ui && \
+          chmod +x bin/as207414_linux_amd64 && \
+          cp bin/as207414_linux_amd64 build/docker/as207414_linux_amd64

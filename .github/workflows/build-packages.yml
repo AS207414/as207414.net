@@ -86,7 +86,7 @@ jobs:
           uses: docker/build-push-action@v2
           with:
             builder: ${{ steps.buildx.outputs.name }}
-            context: build/docker
+            context: ./build/docker
             file: ./Dockerfile
             push: true
             tags: |

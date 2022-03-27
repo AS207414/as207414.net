@@ -52,7 +52,7 @@ jobs:
       GOVER: ${{ needs.go-version.outputs.go-version }}
     needs:
       - gitversion
-      - goversion
+      - go-version
     steps:
       - uses: actions/checkout@v2
       - name: Install Go toolchain

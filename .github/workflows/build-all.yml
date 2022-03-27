@@ -87,7 +87,7 @@ jobs:
           username: ganawa
           password: ${{ secrets.GHP_TOKEN }}
       - name: Build and push development docker image
-        if: contains(env.branchName, 'develop') || startsWith(env.branchName, 'release') || startsWith(env.branchName, 'hotfix')
+        if: contains(env.BRANCH, 'develop') || startsWith(env.BRANCH, 'release') || startsWith(env.BRANCH, 'hotfix')
         run: |
           cd build/docker
           docker build . \
@@ -97,7 +97,7 @@ jobs:
           docker push ghcr.io/${{ github.repository_owner }}/as207414-ui:${{ env.SEMVER }}
 
       - name: Build and push main/latest docker image
-        if: contains(env.branchName, 'main')
+        if: contains(env.BRANCH, 'main')
         run: |
           cd build/docker
           docker build . \
@@ -107,7 +107,7 @@ jobs:
           docker push ghcr.io/${{ github.repository_owner }}/as207414-ui:latest
 
       - name: Build and push non-tagged docker image
-        if: "!startsWith(env.branchName, 'develop') && !startsWith(env.branchName, 'release') && !startsWith(env.branchName, 'hotfix') && !startsWith(env.branchName, 'main')"
+        if: "!startsWith(env.BRANCH, 'develop') && !startsWith(env.BRANCH, 'release') && !startsWith(env.BRANCH, 'hotfix') && !startsWith(env.branchName, 'main')"
         run: |
           cd build/docker
           docker build . \

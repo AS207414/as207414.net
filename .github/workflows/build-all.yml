@@ -59,17 +59,6 @@ jobs:
         uses: actions/setup-go@v2
         with:
           go-version: ${{ needs.go-version.outputs.go-version }}
-      - name: Login to Dockerhub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      - name: Login to Github Packages
-        uses: docker/login-action@v1
-        with:
-          registry: ghcr.io
-          username: ganawa
-          password: ${{ secrets.GHP_TOKEN }}
       - name: Build binaries
         env:
           GOOS: linux
@@ -86,7 +75,17 @@ jobs:
             ./cmd/ui && \
           chmod +x bin/as207414_linux_amd64 && \
           cp bin/as207414_linux_amd64 build/docker/as207414_linux_amd64
-
+      - name: Login to Dockerhub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: Login to Github Packages
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ganawa
+          password: ${{ secrets.GHP_TOKEN }}
       - name: Build and push development docker image
         if: startsWith(env.branchName, 'develop') || startsWith(env.branchName, 'release') || startsWith(env.branchName, 'hotfix')
         run: |
@@ -106,3 +105,13 @@ jobs:
             -t ghcr.io/${{ github.repository_owner }}/as207414-ui:latest
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/as207414-ui:latest
           docker push ghcr.io/${{ github.repository_owner }}/as207414-ui:latest
+
+      - name: Build and push non-tagged docker image
+        if: "!startsWith(env.branchName, 'develop') && !startsWith(env.branchName, 'release') && !startsWith(env.branchName, 'hotfix') && !startsWith(env.branchName, 'main')"
+        run: |
+          cd build/docker
+          docker build . \
+            -t ${{ secrets.DOCKER_HUB_USERNAME }}/as207414-ui:${{ env.SHORTSHA }} \
+            -t ghcr.io/${{ github.repository_owner }}/as207414-ui:${{ env.SHORTSHA }}
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/as207414-ui:${{ env.SHORTSHA }}
+          docker push ghcr.io/${{ github.repository_owner }}/as207414-ui:${{ env.SHORTSHA }}

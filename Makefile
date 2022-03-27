@@ -1,19 +1,10 @@
 # ==================================================================================== #
-# VERSIONING VARIABLES
-# ==================================================================================== #
-
-git_description = $(shell git describe --always --dirty --tags)
-linker_flags = '-s -w -X main.version=${git_description}'
-
-# ==================================================================================== #
 # BUILD VARIABLES
 # ==================================================================================== #
 
 GOOS = 'linux'
 GOARCH = 'amd64'
-build_directory = 'bin'
-build_outfile = '${build_directory}/as207414_${GOOS}_${GOARCH}'
-docker_image_name = "as207414_ui"
+DOCKER_IMAGE_NAME = "as207414_ui"
 
 # ==================================================================================== #
 # HELPERS
@@ -37,7 +28,7 @@ run/ui:
 ## run/ui/docker: run the website ui from docker image
 .PHONY: run/ui/docker
 run/ui/docker:
-	@docker run --rm -p 4000:4000 -it ${docker_image_name}
+	@docker run --rm -p 4000:4000 -it ${DOCKER_IMAGE_NAME}
 
 # ==================================================================================== #
 # BUILD
@@ -46,14 +37,14 @@ run/ui/docker:
 ## build/ui: build the cmd/ui application
 .PHONY: build/ui
 build/ui:
-	@echo 'Building for ${GOOS}_${GOARCH} to ${build_outfile}'
-	@CGO_ENABLED=0 GOOS=${GOOS} GOARCH=${GOARCH} go build -a -installsuffix cgo -ldflags=${linker_flags} -o=${build_outfile} ./cmd/ui
+	@echo 'Building for ${GOOS}_${GOARCH}'
+	@CGO_ENABLED=0 GOOS=${GOOS} GOARCH=${GOARCH} scripts/build-go.sh -s ui
 
 ## build/ui/docker: build the cmd/ui docker image
 .PHONY: build/ui/docker
 build/ui/docker:
-	@echo 'Building docker image for ${GOOS}_${GOARCH} to ${docker_image_name}'
-	@scripts/build.sh -f ${docker_image_name}
+	@echo 'Building docker image for ${GOOS}_${GOARCH} to ${DOCKER_IMAGE_NAME}'
+	@scripts/build-docker.sh -f ${DOCKER_IMAGE_NAME}
 
 # ==================================================================================== #
 # QUALITY CONTROL

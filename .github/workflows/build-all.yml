@@ -70,7 +70,8 @@ jobs:
           MAIN_GO_VER: -X main.go_ver=$GOVER
           MAIN_GIT_SHA: -X main.git_sha=$SHORTSHA
         run: |
-          go build -a -installsuffix cgo -ldflags "-w -s $MAIN_VERSION $MAIN_OS_VER $MAIN_OS_ARC $MAIN_GO_VER $MAIN_GIT_SHA" \
+          go build -a -installsuffix cgo \
+            -ldflags "-w -s ${{ env.MAIN_VERSION }} ${{ env.MAIN_OS_VER }} ${{ env.MAIN_OS_ARC }} ${{ env.MAIN_GO_VER }} ${{ env.MAIN_GIT_SHA }}" \
             -o=bin/as207414_linux_amd64 \
             ./cmd/ui && \
           chmod +x bin/as207414_linux_amd64 && \

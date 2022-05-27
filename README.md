@@ -49,4 +49,4 @@ make run/ui/docker DOCKER_IMAGE_NAME={IMAGE NAME} # Runs built docker image
 
 # Thanks
 
-To Alex Edward's great books [Let's Go](https://lets-go.alexedwards.net/) and [Let's Go Further](https://lets-go-further.alexedwards.net/) where most of this code was from and modified for the site. 
+To Alex Edward's great books [Let's Go](https://lets-go.alexedwards.net/) and [Let's Go Further](https://lets-go-further.alexedwards.net/) where most of the structure of this code was from and modified for the site. 

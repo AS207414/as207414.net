@@ -99,10 +99,11 @@ jobs:
           cd build/docker
           docker build . \
             -t ${{ secrets.DOCKER_HUB_USERNAME }}/as207414-ui:${{ env.SEMVER }} \
-            -t ghcr.io/${{ github.repository_owner }}/as207414-ui:${{ env.SEMVER }}
+            -t ghcr.io/${{ github.repository_owner }}/as207414-ui:${{ env.SEMVER }} \
+            -t us-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT }}/oci/as207414-ui:${{ env.SEMVER }}
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/as207414-ui:${{ env.SEMVER }}
           docker push ghcr.io/${{ github.repository_owner }}/as207414-ui:${{ env.SEMVER }}
-          us-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT }}/oci/as207414-ui:${{ env.SEMVER }}
+          docker push us-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT }}/oci/as207414-ui:${{ env.SEMVER }}
 
       - name: Build and push main/latest docker image
         if: contains(env.BRANCH, 'main')
@@ -110,10 +111,11 @@ jobs:
           cd build/docker
           docker build . \
             -t ${{ secrets.DOCKER_HUB_USERNAME }}/as207414-ui:latest \
-            -t ghcr.io/${{ github.repository_owner }}/as207414-ui:latest
+            -t ghcr.io/${{ github.repository_owner }}/as207414-ui:latest \
+            -t us-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT }}/oci/as207414-ui:latest
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/as207414-ui:latest
           docker push ghcr.io/${{ github.repository_owner }}/as207414-ui:latest
-          us-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT }}/oci/as207414-ui:latest
+          docker push us-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT }}/oci/as207414-ui:latest
 
       - name: Build and push non-tagged docker image
         if: "!startsWith(env.BRANCH, 'develop') && !startsWith(env.BRANCH, 'release') && !startsWith(env.BRANCH, 'hotfix') && !startsWith(env.branchName, 'main') && !startsWith(env.BRANCH, 'tags')"
@@ -121,7 +123,8 @@ jobs:
           cd build/docker
           docker build . \
             -t ${{ secrets.DOCKER_HUB_USERNAME }}/as207414-ui:${{ env.SHORTSHA }} \
-            -t ghcr.io/${{ github.repository_owner }}/as207414-ui:${{ env.SHORTSHA }}
+            -t ghcr.io/${{ github.repository_owner }}/as207414-ui:${{ env.SHORTSHA }} \
+            -t us-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT }}/oci/as207414-ui:${{ env.SHORTSHA }}
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/as207414-ui:${{ env.SHORTSHA }}
           docker push ghcr.io/${{ github.repository_owner }}/as207414-ui:${{ env.SHORTSHA }}
-          us-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT }}/oci/as207414-ui:${{ env.SHORTSHA }}
+          docker push us-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT }}/oci/as207414-ui:${{ env.SHORTSHA }}

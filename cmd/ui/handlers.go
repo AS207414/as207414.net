@@ -11,12 +11,12 @@ func (app *application) index(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	app.render(w, r, "index.page.html")
+	app.render(w, r, "index.html")
 
 }
 
 func (app *application) peering(w http.ResponseWriter, r *http.Request) {
 
-	app.render(w, r, "peering.page.html")
+	app.render(w, r, "peering.html")
 
 }

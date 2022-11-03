@@ -25,17 +25,13 @@ func newTemplate(directory string) (*Template, error) {
 	for _, page := range pages {
 		name := filepath.Base(page)
 
-		ts, err := template.New(name).ParseFS(web.Files, page)
-		if err != nil {
-			return nil, err
+		patterns := []string{
+			fmt.Sprintf("%s/layouts/*.html", directory),
+			fmt.Sprintf("%s/partials/*.html", directory),
+			page,
 		}
 
-		ts, err = ts.ParseFS(web.Files, fmt.Sprintf("%s/layouts/*.html", directory))
-		if err != nil {
-			return nil, err
-		}
-
-		ts, err = ts.ParseFS(web.Files, fmt.Sprintf("%s/partials/*.html", directory))
+		ts, err := template.New(name).ParseFS(web.Files, patterns...)
 		if err != nil {
 			return nil, err
 		}

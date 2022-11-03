@@ -47,11 +47,6 @@ func main() {
 	infoLog := log.New(os.Stdout, "INFO\t", log.LUTC|log.Ltime)
 	errorLog := log.New(os.Stderr, "ERROR\t", log.LUTC|log.Ltime|log.Llongfile)
 
-	// Load templates from /web/
-	// templates,err := newTemplates()
-
-
-	// templateCache, err := newTemplateCache()
 	template, err := newTemplate("templates")
 	if err != nil {
 		errorLog.Fatal(err)

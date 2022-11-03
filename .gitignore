@@ -4,3 +4,5 @@ app/*.py[cod]
 app/*$py.class
 tmp/
 /bin/*
+
+.vscode/
